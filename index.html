@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aiflyb - Launching Soon</title>
+  <style>
+    :root { --primary-green: #8bc34a; --primary-black: #111; }
+    body { margin:0; padding:0; background-color: var(--primary-black); color:white; font-family: 'Segoe UI', sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; text-align:center; flex-direction:column; }
+    h1 { font-size:3rem; color: var(--primary-green); margin-bottom:1rem; }
+    p { font-size:1.2rem; color:#ddd; margin-bottom:2rem; }
+    .form-container { display:flex; justify-content:center; gap:0.5rem; flex-wrap:wrap; }
+    input[type="email"] { padding:0.8rem 1rem; font-size:1rem; border:none; border-radius:4px; outline:none; width:250px; }
+    button { padding:0.8rem 1.5rem; font-size:1rem; background-color: var(--primary-green); color: var(--primary-black); border:none; border-radius:4px; cursor:pointer; font-weight:bold; transition:transform 0.2s ease; }
+    button:hover { transform:scale(1.05); }
+    footer { position:absolute; bottom:1rem; font-size:0.9rem; color:#888; }
+    @media (max-width:600px){ h1{font-size:2rem;} input[type="email"]{width:180px;} }
+  </style>
+</head>
+<body>
+  <h1>Aiflyb</h1>
+  <p>We are launching soon! Stay updated and be the first to experience the future of AI tools.</p>
+  
+  <div class="form-container">
+    <input type="email" id="email" placeholder="Enter your email" required />
+    <button onclick="submitEmail()">Notify Me</button>
+  </div>
+
+  <footer>© 2025 Aiflyb. All rights reserved.</footer>
+
+  <script>
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbzAvEtviRBnGxxD8WauQme4gR8AtwdO0LMtkHXuiyx7exp_sewHIe0T1sDyEBA1g1fIMA/exec"; // replace with your Web App URL
+
+    function submitEmail() {
+      const email = document.getElementById("email").value;
+      if(!email) { alert("Please enter your email."); return; }
+
+      fetch(SHEET_URL + "?email=" + encodeURIComponent(email), { method: "POST" })
+        .then(res => res.json())
+        .then(data => {
+          if(data.result === "success") {
+            alert("Thanks! We'll notify you soon.");
+            document.getElementById("email").value = "";
+          } else {
+            alert("Error: " + data.message);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Something went wrong. Try again.");
+        });
+    }
+  </script>
+</body>
+</html>
